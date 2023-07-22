@@ -73,8 +73,9 @@ main{   //ye cheezon ko centre me lane ke liye
         border-radius: 10px;
         background-color: $dark-grey;
         div.chats{
-            min-height: 65vh;
+            height: 65vh;
             padding: 20px;
+            overflow-y: auto;
             div.user-join{
                 font-size: 0.9rem;
                 color: $dark-grey;

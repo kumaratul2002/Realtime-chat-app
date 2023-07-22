@@ -17,12 +17,17 @@ io.on("connection",(socket)=>{
     socket.on("new-user-joined",(username)=>{  //whenever a user calls an event named new-user-joined hmm given callback function ko call krdenge
         users[socket.id]=username;
         socket.broadcast.emit("user-connected",username); //serer ek mssg broadcast krega jisse ki sabhi ko pata chal jaye ki ek new user ne join kiya hai aur isse client side pe receive krenge 
+        io.emit("user-list",users);//io.emit is used to inform all sockets therefore socket.emit is not used kyunki humme sirf connected walon ko info pass nhi krni sbko krni hai
     })
 
     socket.on("disconnect",()=>{
         socket.broadcast.emit('user-disconnected',user=users[socket.id]);
         delete users[socket.id];
-    })
+        io.emit("user-list",users);  
+    });
+    socket.on('message',(data)=>{
+        socket.broadcast.emit("message",{user:data.user,msg:data.msg})
+    });
 });  
 
 // Socket io setup ends
